@@ -1,0 +1,5 @@
+const test=require('node:test');const assert=require('node:assert/strict');const {missions,createState,complete}=require('../dist/engine.js');
+test('all six missions unlock the final match',()=>{const s=createState();missions.forEach((m,i)=>{const r=complete(s,m.id,m.answer);assert.equal(r.correct,true);assert.equal(r.finished,i===5)});assert.equal(s.score,600);assert.equal(s.completed.length,6)});
+test('learning continues after incorrect answers without double scoring',()=>{const s=createState();const m=missions[0];assert.equal(complete(s,m.id,'ultra').correct,false);assert.equal(s.score,50);complete(s,m.id,'core');assert.equal(s.score,50);assert.equal(s.completed.length,1)});
+test('reset creates independent progress, inventories and player state',()=>{const a=createState(),b=createState();a.collected.push(0);a.badges.push('campus');a.player.x=5;assert.deepEqual(b.collected,[]);assert.deepEqual(b.badges,[]);assert.equal(b.player.x,480)});
+test('unknown missions cannot change the score',()=>{const s=createState();assert.throws(()=>complete(s,'missing','core'));assert.equal(s.score,0)});

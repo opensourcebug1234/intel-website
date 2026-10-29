@@ -7,7 +7,7 @@ const missions=[
 {id:'lab',name:'AI workshop',person:'Dev · the experimenter',x:480,y:425,color:'#a6c786',question:'Give local AI some room.',story:'Dev regularly experiments with demanding, supported AI apps running on the laptop itself and wants more dedicated AI capacity.',answer:'ultra',why:'Core Ultra Series 3 reaches up to 50 NPU TOPS versus up to 17 on Core Series 3. These are family maximums, not app speed guarantees. Software and memory requirements still matter.'},
 {id:'park',name:'Common ground',person:'The town · one shared question',x:770,y:410,color:'#e5ba6b',question:'What connects our two sidekicks?',story:'Which processor family uses Intel 18A manufacturing technology and includes built-in graphics and a dedicated AI engine?',answer:'both',why:'Both! They share modern foundations but size their resources for different needs. Intel 18A describes how the compute silicon is manufactured—not identical performance.'}
 ];
-function createState(){return{completed:[],score:0,started:false,player:{x:480,y:290}}}
+function createState(){return{completed:[],score:0,started:false,collected:[],badges:[],player:{x:480,y:290}}}
 function complete(state,id,answer){const m=missions.find(x=>x.id===id);if(!m)throw Error('Unknown mission');const correct=m.answer===answer;const first=!state.completed.includes(id);if(first){state.completed.push(id);state.score+=correct?100:50}return{correct,first,finished:state.completed.length===missions.length}}
 const api={missions,createState,complete};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.CoreQuest=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
